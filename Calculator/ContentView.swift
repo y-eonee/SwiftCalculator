@@ -11,10 +11,10 @@ struct ContentView: View {
     
     @State private var totalNumber: String = "0"
     var body: some View {
-        ZStack{ //?
-            Color.black //?
+        ZStack{
+            Color.black.ignoresSafeArea()
             VStack {
-                Spacer() //아래로 얼마나 내려보내는거징
+                Spacer() 
                 HStack{
                     Spacer()
                     Text(totalNumber)
