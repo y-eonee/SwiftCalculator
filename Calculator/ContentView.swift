@@ -10,11 +10,67 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var totalNumber: String = "0"
+    
+    enum ButtonType : String{
+        case one, two, three, four, five, six, seven, eight, nine, zero
+        case plus, minus, multiple, divide, equal, dot
+        case clear, slash, percent
+        
+        var buttonDisplayName :  String{
+            switch self{
+                case .one : return "1"
+                case .two : return "2"
+                case .three : return "3"
+                case .four : return "4"
+                case .five : return "5"
+                case .six : return "6"
+                case .seven: return "7"
+                case .eight : return "8"
+                case .nine : return "9"
+                case .zero : return "0"
+                case .plus: return "+"
+                case .minus: return "-"
+                case .multiple: return "X"
+                case .divide : return "/"
+                case .equal : return "="
+                case .dot : return "."
+                case .clear : return ""
+                case .slash : return "/"
+                case .percent : return "%"
+            }
+        }
+        
+        var buttonBackgroundColor : Color{
+            switch self{
+                case .one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .zero, .dot : return Color("NumberButton")
+                case .clear, .slash, .percent : return Color.gray
+                case .plus, .minus, .multiple, .divide, .equal : return Color.orange
+            }
+        }
+        
+        var buttonForegroundColor : Color{
+            switch self{
+                case .one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .zero, .dot, .plus, .minus, .multiple, .divide, .equal  : return Color.white
+                case .clear, .slash, .percent : return Color.black
+            }
+        }
+    }
+    
+    
+    private let buttonData: [[ButtonType]] = [
+        [.seven, .eight, .nine, .multiple],
+        [.four, .five, .six, .minus],
+        [.one, .two, .three, .plus],
+        [.zero, .zero, .dot, .equal]
+    ]
+    
+   
+
     var body: some View {
         ZStack{
             Color.black.ignoresSafeArea()
             VStack {
-                Spacer() 
+                Spacer()
                 HStack{
                     Spacer()
                     Text(totalNumber)
@@ -67,241 +123,29 @@ struct ContentView: View {
                             .font(.system(size: 33))
                     }
                 }
-                HStack{
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "7"
+                
+                ForEach(buttonData, id : \.self){ line in
+                    HStack{
+                        ForEach(line, id : \.self){ value in
+                            Button {
+                                if totalNumber == "0"{
+                                    totalNumber = value.buttonDisplayName
+                                }
+                                else {
+                                    totalNumber += value.buttonDisplayName
+                                }
+                            } label: {
+                                Text(value.buttonDisplayName)
+                                    .frame(width: 80, height: 80)
+                                    .background(value.buttonBackgroundColor)
+                                    .cornerRadius(40)
+                                    .foregroundColor(value.buttonForegroundColor)
+                                    .font(.system(size: 33))
+                            }
                         }
-                        else {
-                            totalNumber += "7"
-                        }
-                    } label: {
-                        Text("7")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "8"
-                        }
-                        else {
-                            totalNumber += "8"
-                        }
-                    } label: {
-                        Text("8")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "9"
-                        }
-                        else {
-                            totalNumber += "9"
-                        }
-                    } label: {
-                        Text("9")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-                    Button {
-                        
-                    } label: {
-                        Text("X")
-                            .frame(width: 80, height: 80)
-                            .background(.orange)
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
                     }
                 }
-                HStack{
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "4"
-                        }
-                        else {
-                            totalNumber += "4"
-                        }
-                    } label: {
-                        Text("4")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "5"
-                        }
-                        else {
-                            totalNumber += "5"
-                        }
-                    } label: {
-                        Text("5")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "6"
-                        }
-                        else {
-                            totalNumber += "6"
-                        }
-                    } label: {
-                        Text("6")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-                    Button {
-                        
-                    } label: {
-                        Text("-")
-                            .frame(width: 80, height: 80)
-                            .background(.orange)
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-                }
-                HStack{
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "1"
-                        }
-                        else {
-                            totalNumber += "1"
-                        }
-                    } label: {
-                        Text("1")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "2"
-                        }
-                        else {
-                            totalNumber += "2"
-                        }
-                    } label: {
-                        Text("2")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "3"
-                        }
-                        else {
-                            totalNumber += "3"
-                        }
-                    } label: {
-                        Text("3")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-                    Button {
-                        
-                    } label: {
-                        Text("+")
-                            .frame(width: 80, height: 80)
-                            .background(.orange)
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-                }
-                HStack{
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "0"
-                        }
-                        else {
-                            totalNumber += "0"
-                        }
-                    } label: {
-                        Text("0")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    Button {
-                        if totalNumber == "0"{
-                            totalNumber = "0"
-                        }
-                        else {
-                            totalNumber += "0"
-                        }
-                    } label: {
-                        Text("0")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-
-                    
-                    Button {
-                        totalNumber += "."
-                    } label: {
-                        Text(".")
-                            .frame(width: 80, height: 80)
-                            .background(Color("NumberButton"))
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-                    Button {
-                        
-                    } label: {
-                        Text("=")
-                            .frame(width: 80, height: 80)
-                            .background(.orange)
-                            .cornerRadius(40)
-                            .foregroundColor(.white)
-                            .font(.system(size: 33))
-                    }
-                }
+               
             }
             .padding()
         }
