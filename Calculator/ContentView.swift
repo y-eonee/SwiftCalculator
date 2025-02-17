@@ -120,29 +120,30 @@ struct ContentView: View {
                                     totalNumber = "0"
                                     shouldResetTotalNumber = false
                                 }
+                                else if value == .dot {
+                                    if !totalNumber.contains(".") {
+                                        totalNumber += "."
+                                        shouldResetTotalNumber = false
+                                    }
+                                }
                                 else if value == .plus || value == .minus || value == .multiple || value == .divide{
                                     operatorSign = value.buttonDisplayName
                                     prevNumber =  Double(totalNumber) ?? 0
-                                    shouldResetTotalNumber = false
+                                    shouldResetTotalNumber = true
                                 }
                                 else if value.buttonDisplayName == "="{
                                     nextNumber = Double(totalNumber) ?? 0
                                     calculateNumber()
                                     shouldResetTotalNumber = true
                                 }
-                                else if value == .dot {
-                                    if !totalNumber.contains(".") {
-                                        totalNumber += "."
-                                    }
-                                }
                                 else if totalNumber == "0" {
                                     totalNumber = value.buttonDisplayName
                                 }
                                 else {
-                                    if operatorSign != nil || shouldResetTotalNumber {
+                                    if shouldResetTotalNumber {
                                         totalNumber = value.buttonDisplayName
-                                    }
-                                    else {
+                                        shouldResetTotalNumber = false
+                                    } else {
                                         totalNumber += value.buttonDisplayName
                                     }
                                 }
